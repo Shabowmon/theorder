@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050805">
+  <title>Restaurant · TheOrder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=VT323&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top"></header>
+  <main class="wrap">
+    <p class="dim empty" id="loading">LOADING...</p>
+    <p class="error" id="page-error" hidden></p>
+
+    <section id="restaurant" hidden>
+      <h1 id="r-name"></h1>
+      <p class="meta" id="r-meta"></p>
+      <p class="meta" id="r-address" hidden></p>
+
+      <div class="tabs" role="tablist">
+        <button class="btn" type="button" role="tab" id="tab-mine" aria-controls="panel-mine">[ MY ORDER ]</button>
+        <button class="btn" type="button" role="tab" id="tab-community" aria-controls="panel-community">[ COMMUNITY ]</button>
+      </div>
+
+      <div id="panel-mine" role="tabpanel" aria-labelledby="tab-mine"></div>
+      <div id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+  <script src="/restaurant.js"></script>
+</body>
+</html>

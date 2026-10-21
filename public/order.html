@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050805">
+  <title>My Order · TheOrder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=VT323&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top"></header>
+  <main class="wrap">
+    <p class="dim empty" id="loading">LOADING...</p>
+    <p class="error" id="page-error" hidden></p>
+    <div id="gate" hidden>
+      <h1>MY ORDER</h1>
+      <p>Sign in to save your order.</p>
+      <div class="actions" id="gate-actions"></div>
+    </div>
+
+    <form id="order-form" autocomplete="off" hidden>
+      <h1 id="heading">SAVE MY ORDER</h1>
+      <p class="meta" id="r-line"></p>
+
+      <label for="title" class="label">Title</label>
+      <input type="text" id="title" maxlength="80" placeholder="My usual">
+
+      <p class="label" style="margin:16px 0 4px">Dishes *</p>
+      <div id="dishes"></div>
+      <button class="btn" type="button" id="add-dish">[ + ADD DISH ]</button>
+
+      <label for="notes" class="label">Notes</label>
+      <textarea id="notes" maxlength="1000" placeholder="Ask for the chili crisp on the side"></textarea>
+
+      <label class="check" for="is-public">
+        <input type="checkbox" id="is-public" checked>
+        <span class="box" aria-hidden="true"></span>
+        <span>PUBLIC <span class="dim">— show it in the Community tab</span></span>
+      </label>
+
+      <p class="error" id="form-error" hidden></p>
+      <div class="actions">
+        <button class="btn primary" type="submit" id="save">[ SAVE ORDER ]</button>
+        <a class="btn" id="cancel" href="/">[ CANCEL ]</a>
+      </div>
+    </form>
+  </main>
+  <script src="/app.js"></script>
+  <script src="/order.js"></script>
+</body>
+</html>

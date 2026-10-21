@@ -1,0 +1,19 @@
+name = "theorder"
+main = "worker.js"
+compatibility_date = "2026-10-08"
+
+# Only this folder is served as the website. Requests that don't match a
+# file in it (/api/*, /auth/*) fall through to worker.js.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Run `npx wrangler d1 create theorder` once and paste the ID it prints here.
+# (Local `wrangler dev` works with the placeholder; deploy needs the real ID.)
+[[d1_databases]]
+binding = "DB"
+database_name = "theorder"
+database_id = "3effe3c6-9a74-4fb4-9207-8a5326174cb2"
+
+# Secrets are NOT set here. Production: `npx wrangler secret put GOOGLE_CLIENT_ID`
+# and `GOOGLE_CLIENT_SECRET`. Local dev: put them in .dev.vars (gitignored).

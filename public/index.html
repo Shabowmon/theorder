@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050805">
+  <title>TheOrder</title>
+  <meta name="description" content="Don't read 400 reviews. See what people actually order.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=VT323&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top"></header>
+  <main class="wrap">
+    <p class="dim" style="margin-top:16px">Don't read 400 reviews. See what people actually order.</p>
+    <p class="error" id="signin-error" hidden>Sign-in didn't go through. Try again.</p>
+
+    <form id="search-form" class="search-box" role="search" autocomplete="off">
+      <label for="q" class="label">Restaurant name or city</label>
+      <input type="search" id="q" name="q" maxlength="100" placeholder="e.g. Thai Basil" enterkeyhint="search">
+      <label for="city" class="label">City (optional)</label>
+      <input type="text" id="city" name="city" maxlength="80" placeholder="e.g. Pleasanton">
+      <div class="actions"><button class="btn primary" type="submit">[ SEARCH ]</button></div>
+    </form>
+
+    <section id="results" hidden>
+      <div class="rule" aria-hidden="true"></div>
+      <h2>RESULTS</h2>
+      <p class="error" id="search-error" hidden></p>
+      <ul class="list" id="result-list"></ul>
+      <p id="none" class="empty" hidden>NO MATCHES. Be the first to add it.</p>
+      <p id="not-listed" hidden><button class="btn" type="button" id="show-add">[ + NOT LISTED? ADD IT ]</button></p>
+    </section>
+
+    <section id="add" hidden>
+      <div class="rule" aria-hidden="true"></div>
+      <h2>ADD THIS RESTAURANT</h2>
+      <div id="add-gate" hidden>
+        <p>Sign in to add a restaurant.</p>
+        <div class="actions" id="add-gate-actions"></div>
+      </div>
+      <form id="add-form" autocomplete="off" hidden>
+        <label for="r-name" class="label">Name *</label>
+        <input type="text" id="r-name" maxlength="100" required>
+        <label for="r-city" class="label">City *</label>
+        <input type="text" id="r-city" maxlength="80" required>
+        <label for="r-address" class="label">Address</label>
+        <input type="text" id="r-address" maxlength="200">
+        <label for="r-cuisine" class="label">Cuisine</label>
+        <input type="text" id="r-cuisine" maxlength="50" placeholder="e.g. Thai">
+        <p class="error" id="add-error" hidden></p>
+        <div class="actions"><button class="btn primary" type="submit">[ ADD RESTAURANT ]</button></div>
+      </form>
+    </section>
+
+    <section id="recent" hidden>
+      <div class="rule" aria-hidden="true"></div>
+      <h2>MY RECENT ORDERS</h2>
+      <ul class="list" id="recent-list"></ul>
+      <div class="actions"><a class="btn" href="/my-orders">[ ALL MY ORDERS ]</a></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+  <script src="/home.js"></script>
+</body>
+</html>

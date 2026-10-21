@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050805">
+  <title>My Orders · TheOrder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=VT323&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top"></header>
+  <main class="wrap">
+    <h1>MY ORDERS</h1>
+    <p class="dim" id="who"></p>
+    <div id="list"><p class="dim empty">LOADING...</p></div>
+  </main>
+  <script src="/app.js"></script>
+  <script>
+    // My Orders (profile): every order you've saved, newest first.
+    (async () => {
+      const list = document.getElementById("list");
+      const user = await getMe();
+      if (!user) {
+        list.innerHTML = `<p class="empty">Sign in to see your orders.</p><div class="actions">${signInButton()}</div>`;
+        return;
+      }
+      document.getElementById("who").textContent = `SIGNED IN AS ${user.display_name}`;
+      try {
+        const { orders } = await api("/api/my-orders");
+        list.innerHTML = orders.length
+          ? `<ul class="list">${orders.map((o) => `
+              <li><a class="row-link" href="/restaurant?id=${encodeURIComponent(o.restaurant.id)}&tab=mine">
+                <span class="name">${esc(o.restaurant.name)}</span>
+                <span class="dim"> — ${esc(o.restaurant.city)}</span>
+                ${o.is_public ? "" : `<span class="badge">PRIVATE</span>`}<br>
+                <span>${esc(o.title)}</span><br>
+                <span class="dim">${esc(o.items.join(" / "))}</span>
+              </a></li>`).join("")}</ul>`
+          : `<p class="empty">No orders yet.</p><div class="actions"><a class="btn primary" href="/">[ FIND A RESTAURANT ]</a></div>`;
+      } catch (error) {
+        list.innerHTML = `<p class="error">${esc(error.message)}</p>`;
+      }
+    })();
+  </script>
+</body>
+</html>

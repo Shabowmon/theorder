@@ -1,0 +1,209 @@
+/* TheOrder — old school computer look (SPEC.md "Look & feel").
+   One theme: green phosphor on black. VT323 for the logo/headings/badges,
+   IBM Plex Mono for everything else. Square corners, flat colors, no
+   gradients, no shadows. */
+
+:root {
+  --bg: #050805;
+  --fg: #8dff9e;        /* body text */
+  --hi: #d6ffdc;        /* headings, emphasis */
+  --dim: #5cbf6c;       /* secondary text, borders */
+  --err: #ff8a70;
+  --display: "VT323", "Courier New", Courier, monospace;
+  --mono: "IBM Plex Mono", "Courier New", Courier, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; border-radius: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Form controls don't inherit fonts by default — force mono everywhere. */
+button, input, textarea, select { font: inherit; color: inherit; }
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px calc(48px + env(safe-area-inset-bottom));
+}
+
+/* ---------- Header ---------- */
+
+.top {
+  border-bottom: 2px solid var(--dim);
+  padding-top: env(safe-area-inset-top);
+}
+.top .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+.logo {
+  font-family: var(--display);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--hi);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.cursor { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+
+.nav { display: flex; flex-wrap: wrap; gap: 0 4px; margin-left: -8px; }
+
+/* ---------- Type ---------- */
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: normal;
+  color: var(--hi);
+  line-height: 1.1;
+  margin: 24px 0 8px;
+}
+h1 { font-size: 2.6rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.6rem; }
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--dim);
+  font-size: 0.9rem;
+}
+.dim { color: var(--dim); }
+.error { color: var(--err); }
+.error::before { content: "!! "; }
+p { margin: 8px 0; }
+
+a { color: var(--hi); }
+
+/* An === divider line, as wide as the column. */
+.rule {
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--dim);
+  margin: 16px 0;
+  user-select: none;
+}
+.rule::before { content: "================================================================================================================"; }
+
+/* ---------- Buttons: [ BRACKETED ], inverse video on press ---------- */
+
+.btn {
+  display: inline-block;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--fg);
+  padding: 10px 8px;
+  min-height: 44px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn:hover, .btn:active, .btn[aria-selected="true"] { background: var(--fg); color: var(--bg); }
+.btn.primary { background: var(--fg); color: var(--bg); font-weight: 600; }
+.btn.primary:hover, .btn.primary:active { background: var(--hi); }
+.btn.danger { color: var(--err); }
+.btn.danger:hover, .btn.danger:active { background: var(--err); color: var(--bg); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+:focus-visible { outline: 2px dashed var(--hi); outline-offset: 2px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; align-items: center; }
+
+/* ---------- Forms ---------- */
+
+label { display: block; margin: 16px 0 4px; }
+
+input[type="text"], input[type="search"], textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  background: var(--bg);
+  color: var(--hi);
+  border: 2px solid var(--dim);
+  padding: 10px;
+  font-size: 17px;   /* 16px+ stops iOS zooming in on focus */
+  caret-color: var(--hi);
+}
+input:focus, textarea:focus { outline: none; border-color: var(--hi); }
+input::placeholder, textarea::placeholder { color: var(--dim); opacity: 1; }
+textarea { min-height: 96px; resize: vertical; }
+
+.search-box input { font-size: 1.25rem; padding: 14px 12px; border-color: var(--fg); }
+
+.dish-row { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; }
+.dish-row input { flex: 1; }
+
+/* Checkbox drawn as [X] / [ ] */
+.check { display: flex; align-items: center; gap: 10px; cursor: pointer; min-height: 44px; }
+.check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.check .box::before { content: "[ ]"; color: var(--hi); font-weight: 600; }
+.check input:checked + .box::before { content: "[X]"; }
+.check input:focus-visible + .box { outline: 2px dashed var(--hi); outline-offset: 2px; }
+
+/* ---------- Lists & cards ---------- */
+
+.list { list-style: none; margin: 0; padding: 0; }
+.list > li { border-bottom: 1px solid var(--dim); }
+.list > li:first-child { border-top: 1px solid var(--dim); }
+.row-link {
+  display: block;
+  padding: 12px 4px;
+  color: var(--fg);
+  text-decoration: none;
+}
+.row-link:hover, .row-link:active { background: var(--fg); color: var(--bg); }
+.row-link:hover .dim, .row-link:active .dim { color: var(--bg); }
+.row-link .name { color: inherit; font-weight: 600; }
+.row-link:not(:hover) .name { color: var(--hi); }
+.row-link::before { content: "> "; }
+
+.card {
+  border: 2px solid var(--dim);
+  padding: 12px 14px;
+  margin: 16px 0;
+}
+.card .who { color: var(--dim); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+.card .title { color: var(--hi); font-weight: 600; margin: 2px 0 8px; }
+.items { list-style: none; margin: 0 0 8px; padding: 0; }
+.items li { padding-left: 2ch; text-indent: -2ch; }
+.items li::before { content: "* "; color: var(--dim); }
+.notes { white-space: pre-wrap; border-top: 1px dashed var(--dim); padding-top: 8px; margin-top: 8px; }
+.notes::before { content: "NOTE: "; color: var(--dim); }
+
+.badge {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 2px 6px;
+  border: 1px solid var(--dim);
+  color: var(--dim);
+  vertical-align: middle;
+}
+
+.tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--dim); margin: 16px 0 0; }
+.tabs .btn { flex: 1; }
+
+.meta { color: var(--dim); }
+.empty { padding: 16px 0; }
+
+[hidden] { display: none !important; }
