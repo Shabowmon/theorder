@@ -9,9 +9,23 @@ export default {
     if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/auth/")) {
       return handleDynamic(request, env, url);
     }
-    return env.ASSETS.fetch(request);   // static site
+    return serveStatic(request, env, url);
   }
 };
+
+// The static site in ./public. Anything that isn't a file there gets the
+// 404 page (with a real 404 status) instead of an empty response.
+async function serveStatic(request, env, url) {
+  const response = await env.ASSETS.fetch(request);
+  if (response.status !== 404) {
+    return response;
+  }
+  const page = await env.ASSETS.fetch(new URL("/404.html", url.origin));
+  if (!page.ok) {
+    return new Response("Not found", { status: 404, headers: { "Content-Type": "text/plain" } });
+  }
+  return new Response(page.body, { status: 404, headers: page.headers });
+}
 
 // ==================== Routing ====================
 
